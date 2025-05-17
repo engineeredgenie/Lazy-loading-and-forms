@@ -1,0 +1,53 @@
+<form [formGroup]="userForm" class="w-full max-w-sm p-6 bg-white rounded-md shadow-sm space-y-4">
+  <h2 class="text-xl font-semibold text-gray-700">Minimal Form</h2>
+
+  <div>
+    <label for="firstname" class="block text-sm font-medium text-gray-600">First Name</label>
+    <input formControlName="firstName" autocomplete="off" type="text" id="firstname" name="firstname" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <span *ngIf="userForm.controls['firstName'].hasError('required') && !userForm.get('firstName')?.pristine" class="text-red-500 text-xs italic">First name is required</span>
+
+
+      <span *ngIf="userForm.controls['firstName'].hasError('minlength')" class="text-red-500 text-xs italic">First name should be at least 6 characters</span>
+
+
+      <span *ngIf="userForm.controls['firstName'].hasError('maxlength')" class="text-red-500 text-xs italic">First name should not exceed 10 characters</span>
+
+  </div>
+
+  <div>
+    <label for="lastname" class="block text-sm font-medium text-gray-600">Last Name</label>
+    <input formControlName="lastName" autocomplete="off" type="text" id="lastname" name="lastname" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <span *ngIf="userForm.controls['lastName'].hasError('required')" class="text-red-500 text-xs italic">Last name is required</span>
+
+  </div>
+
+  <div>
+    <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
+    <input formControlName="email" autocomplete="off" type="email" id="email" name="email" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <span *ngIf="userForm.controls['email'].hasError('required')" class="text-red-500 text-xs italic">Email is required</span>
+
+  </div>
+
+  <div>
+    <label for="age" class="block text-sm font-medium text-gray-600">Age</label>
+    <input formControlName="age" type="number" id="age" name="age" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <span *ngIf="userForm.controls['age'].hasError('required')" class="text-red-500 text-xs italic">Age is required</span>
+
+  </div>
+
+  <div>
+    <label for="phone" class="block text-sm font-medium text-gray-600">Phone</label>
+    <input formControlName="phone" type="text" id="phone" name="phone" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <span *ngIf="userForm.controls['phone'].hasError('required')" class="text-red-500 text-xs italic">Phone is required</span>
+
+  </div>
+
+  <button [disabled]="userForm.invalid" type="submit" class="w-full bg-blue-500 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-600 transition">
+    Submit
+  </button>
+</form>
+
+<br>
+
+Status: {{userForm.valid}}
