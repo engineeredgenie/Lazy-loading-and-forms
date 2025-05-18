@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {NgIf} from '@angular/common';
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-reactive-form',
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NgForOf
   ],
   templateUrl: './reactive-form.component.html',
   styleUrl: './reactive-form.component.scss'
@@ -17,16 +18,49 @@ export class ReactiveFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.userForm = fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]],
+      firstName: [''],
       lastName: '',
       email: ['', [Validators.required, Validators.email]],
       age: ['', [Validators.required, Validators.required, Validators.min(1), Validators.max(30)]],
-      phone: ['', [Validators.required, Validators.pattern('^\\+\\d{2,3}\\d{10}$')]]
+      phone: ['', [Validators.required, Validators.pattern('^\\+\\d{2,3}\\d{10}$')]],
+      hobbies: fb.array([this.createHobby()])
+    });
+
+    this.userForm.get('lastName')?.valueChanges.subscribe((res: any) => {
+      if (res.length) {
+        this.userForm.get('firstName')?.setValidators([Validators.required]);
+        this.userForm.updateValueAndValidity();
+      } else {
+        this.userForm.get('firstName')?.clearValidators();
+      }
+    })
+  }
+
+  createHobby() {
+    return this.fb.group({
+      hobbyName: ['', [Validators.required]],
+      hobbyExperience: ['', [Validators.required]],
     });
   }
 
+  get hobbies() {
+    return this.userForm.get('hobbies') as FormArray;
+  }
+
+  addHobby() {
+    this.hobbies.push(this.createHobby());
+  }
+
   ngOnInit() {
-    console.log(this.userForm.value)
+
+  }
+
+  saveForm() {
+    console.log(this.userForm.errors)
+    if (this.userForm.invalid) {
+      // show all validation errors
+      this.userForm.markAllAsTouched();
+    }
   }
 
 }

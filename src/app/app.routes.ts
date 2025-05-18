@@ -31,7 +31,19 @@ export const routes: Routes = [
       {
         path: 'reactive-form',
         loadComponent: () => import('./forms/reactive-form/reactive-form.component').then(m => m.ReactiveFormComponent),
-      }
+      },
     ]
   },
+  {
+    path: 'signals',
+    loadComponent: () => import('./signals/signals.component').then(m => m.SignalsComponent),
+  },
+  {
+    path: 'observables',
+    loadComponent: () => import('./observables/observables.component').then(m => m.ObservablesComponent),
+  },
+  {
+    path: 'subjects',
+    loadComponent: () => import('./subjects/subjects.component').then(m => m.SubjectsComponent),
+  }
 ];

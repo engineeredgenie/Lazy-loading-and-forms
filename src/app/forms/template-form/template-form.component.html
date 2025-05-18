@@ -19,3 +19,9 @@
 @if (!userForm.pristine && userForm.invalid) {
   <span>All fields are required</span>
 }
+
+
+<br><br><br>
+
+<input type="text" [formControl]="username" placeholder="Username">
+<button (click)="showData()">Get</button>
